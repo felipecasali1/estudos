@@ -24,12 +24,7 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        Product::create(
-            [
-                $request->validated(),
-                'user_id' => auth()->id(),
-            ]
-        );
+        Product::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
         return redirect()->route('products.index')->with('success', 'Product registered successfully!');
     }
 
@@ -40,17 +35,15 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        $categories = Category::all();
+        $users = User::all();
+        return view('products.edit', compact(['product', 'categories', 'users']));
     }
 
     public function update(ProductRequest $request, Product $product)
     {
-        $product->update(
-            [
-                $request->validated(),
-                'user_id' => auth()->id(),
-            ]
-        );
+
+        $product->update($request->validated(), ['user_id' => auth()->id()]);
         return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
 

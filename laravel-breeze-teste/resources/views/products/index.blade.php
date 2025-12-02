@@ -19,19 +19,43 @@
                         <x-primary-button>{{ __('New Product') }}</x-primary-button>
                     </a>
                 </div>
-                <div class="p-6 text-gray-900">
-                    <table class="w-full">
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Description</th>
-                            <th>Category</th>
-                            <th>User</th>
+                <div class="pb-6 pl-6 pr-6 text-gray-900">
+                    <table class="w-full border-collapse">
+                        <tr class="bg-gray-100">
+                            <th class="border px-4 py-2 text-left">ID</th>
+                            <th class="border px-4 py-2 text-left">Name</th>
+                            <th class="border px-4 py-2 text-left">Price</th>
+                            <th class="border px-4 py-2 text-left">Quantity</th>
+                            <th class="border px-4 py-2 text-left">Description</th>
+                            <th class="border px-4 py-2 text-left">Category</th>
+                            <th class="border px-4 py-2 text-left">User</th>
+                            <th class="border px-4 py-2 text-left">Options</th>
                         </tr>
                         @forelse ($products as $product)
-
+                            <tr>
+                                <td class="border px-4 py-2">{{ $product->id }}</td>
+                                <td class="border px-4 py-2">{{ $product->name }}</td>
+                                <td class="border px-4 py-2">R${{ $product->price }}</td>
+                                <td class="border px-4 py-2">{{ $product->quantity }}</td>
+                                <td class="border px-4 py-2">{{ $product->description ?? '-' }}</td>
+                                <td class="border px-4 py-2">{{ $product->category->name }}</td>
+                                <td class="border px-4 py-2">{{ $product->user->name }}</td>
+                                <td class="flex border px-4 py-2 justify-center">
+                                    <a href="{{ route('products.edit', $product) }}">
+                                        <x-primary-button>{{ __('Edit') }}</x-primary-button>
+                                    </a>
+                                    <div class="w-2"></div>
+                                    <form action="{{ route('products.destroy', $product) }}"
+                                        onsubmit="return confirm('{{ __('Are you sure you want to delete this product?') }}')"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-primary-button type="submit">
+                                            {{ __('Delete') }}
+                                        </x-primary-button>
+                                    </form>
+                                </td>
+                            </tr>
                         @empty
                             <tr>
                                 <td colspan="7" class="text-center pt-6 text-red-500 font-semibold">

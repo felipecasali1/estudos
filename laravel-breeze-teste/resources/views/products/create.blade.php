@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="mt-6 justify-center text-center">
-                            <x-primary-button type="submit" class="">
+                            <x-primary-button type="submit">
                                 {{ __('Create Product') }}
                             </x-primary-button>
                         </div>

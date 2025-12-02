@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:100', Rule::unique('products', 'name')->ignore($this->route('product'))],
-            'price' => ['required', 'decimal:2', 'min:1'],
+            'price' => ['required', 'numeric', 'min:1'],
             'quantity' => ['required', 'integer', 'min:0'],
             'description' => ['nullable', 'string', 'max:100'],
             'category_id' => ['required', 'exists:categories,id'],
